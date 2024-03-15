@@ -1,12 +1,12 @@
 import { LucideIcon } from "lucide-react";
 
-interface NavbarItemProps {
+interface SidebarItemProps {
   icon: LucideIcon;
   label: string;
   path: string;
 }
 
-const NavbarItem = ({ icon: Icon, path, label }: NavbarItemProps) => {
+const SidebarItem = ({ icon: Icon, path, label }: SidebarItemProps) => {
   return (
     <div className="flex items-center transition dark:hover:bg-secondary hover:bg-slate-50 rounded-full p-4 cursor-pointer gap-2">
       <Icon className="w-5 h-5" />
@@ -14,4 +14,4 @@ const NavbarItem = ({ icon: Icon, path, label }: NavbarItemProps) => {
     </div>
   );
 };
-export default NavbarItem;
+export default SidebarItem;
