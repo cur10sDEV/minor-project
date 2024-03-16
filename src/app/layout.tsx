@@ -1,5 +1,6 @@
 import ModalProvider from "@/components/providers/ModalProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -29,6 +30,14 @@ export default function RootLayout({
             storageKey="cloud-connect-pro"
           >
             <ModalProvider />
+            <Toaster
+              position="top-center"
+              richColors
+              closeButton
+              toastOptions={{
+                classNames: { title: "text-base" },
+              }}
+            />
             {children}
           </ThemeProvider>
         </body>

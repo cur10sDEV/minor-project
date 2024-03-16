@@ -21,6 +21,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { db } from "@/lib/firebase";
+import { useUser } from "@clerk/nextjs";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   folderName: z.string().min(2, {
@@ -29,7 +33,8 @@ const formSchema = z.object({
 });
 
 const FolderModal = () => {
-  const { isOpen, onOpen, onClose } = useFolder();
+  const { isOpen, onClose } = useFolder();
+  const { user } = useUser();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,8 +43,29 @@ const FolderModal = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!user?.id) {
+      toast.error(
+        "You need to be registered in order to perform this operation!"
+      );
+    } else {
+      const folder = await toast.promise(
+        addDoc(collection(db, "folders"), {
+          name: values.folderName,
+          timestamp: serverTimestamp(),
+          uid: user?.id,
+          isArchive: false,
+        }),
+        {
+          loading: "Processing",
+          success: "Folder created successfully",
+          error: "Error creating folder",
+        }
+      );
+
+      form.reset();
+      onClose();
+    }
   }
 
   return (
