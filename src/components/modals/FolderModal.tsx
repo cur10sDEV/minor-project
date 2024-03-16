@@ -21,16 +21,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { db } from "@/lib/firebase";
+import { addFolder } from "@/lib/actions/folder";
+import { formSchema } from "@/schemas";
 import { useUser } from "@clerk/nextjs";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { toast } from "sonner";
-
-const formSchema = z.object({
-  folderName: z.string().min(2, {
-    message: "Folder name must be at least 2 characters.",
-  }),
-});
 
 const FolderModal = () => {
   const { isOpen, onClose } = useFolder();
@@ -50,12 +44,7 @@ const FolderModal = () => {
       );
     } else {
       const folder = await toast.promise(
-        addDoc(collection(db, "folders"), {
-          name: values.folderName,
-          timestamp: serverTimestamp(),
-          uid: user?.id,
-          isArchive: false,
-        }),
+        addFolder({ folderName: values.folderName, userId: user.id }),
         {
           loading: "Processing",
           success: "Folder created successfully",
