@@ -1,3 +1,4 @@
+import ModalProvider from "@/components/providers/ModalProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
@@ -27,6 +28,7 @@ export default function RootLayout({
             disableTransitionOnChange
             storageKey="cloud-connect-pro"
           >
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>
