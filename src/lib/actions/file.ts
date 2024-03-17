@@ -24,7 +24,5 @@ export const uploadFile = async ({ file, userId, image }: IUploadFile) => {
 
   const fileUrl = await getDownloadURL(fileRef);
 
-  console.log(fileUrl);
-
   return await updateDoc(doc, { url: fileUrl });
 };

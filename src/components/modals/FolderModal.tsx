@@ -4,13 +4,7 @@ import useFolder from "@/hooks/useFolder";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,11 +18,13 @@ import { Input } from "@/components/ui/input";
 import { addFolder } from "@/lib/actions/folder";
 import { formSchema } from "@/schemas";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const FolderModal = () => {
   const { isOpen, onClose } = useFolder();
   const { user } = useUser();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,8 +39,10 @@ const FolderModal = () => {
         "You need to be registered in order to perform this operation!"
       );
     } else {
-      const folder = await toast.promise(
-        addFolder({ folderName: values.folderName, userId: user.id }),
+      await toast.promise(
+        addFolder({ folderName: values.folderName, userId: user.id }).then(() =>
+          router.refresh()
+        ),
         {
           loading: "Processing",
           success: "Folder created successfully",
@@ -59,7 +57,6 @@ const FolderModal = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogTrigger>Open</DialogTrigger>
       <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle>New Folder</DialogTitle>

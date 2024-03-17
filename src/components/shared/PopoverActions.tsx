@@ -4,6 +4,7 @@ import useFolder from "@/hooks/useFolder";
 import { uploadFile } from "@/lib/actions/file";
 import { useUser } from "@clerk/nextjs";
 import { FileUp, Folder, FolderUp } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, ElementRef, useRef } from "react";
 import { toast } from "sonner";
 import { Separator } from "../ui/separator";
@@ -12,6 +13,7 @@ const PopoverActions = () => {
   const inputRef = useRef<ElementRef<"input">>(null);
   const { onOpen } = useFolder();
   const { user } = useUser();
+  const router = useRouter();
 
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!user?.id) {
@@ -35,8 +37,8 @@ const PopoverActions = () => {
         reader.onload = (e) => {
           image = e.target?.result as string;
           const res = toast.promise(
-            uploadFile({ file, userId: user.id, image }).then((res) =>
-              console.log(res)
+            uploadFile({ file, userId: user.id, image }).then(() =>
+              router.refresh()
             ),
             {
               loading: "Processing",
