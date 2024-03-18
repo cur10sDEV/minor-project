@@ -8,7 +8,7 @@ import {
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { db, storage } from "../firebase";
 
-export const uploadFile = async ({ file, userId, image }: IUploadFile) => {
+export const uploadFile = async ({ file, userId, url }: IUploadFile) => {
   const doc = await addDoc(collection(db, "files"), {
     name: file.name,
     type: file.type,
@@ -20,7 +20,7 @@ export const uploadFile = async ({ file, userId, image }: IUploadFile) => {
 
   const fileRef = ref(storage, `files/${doc.id}/image`);
 
-  await uploadString(fileRef, image, "data_url");
+  await uploadString(fileRef, url, "data_url");
 
   const fileUrl = await getDownloadURL(fileRef);
 

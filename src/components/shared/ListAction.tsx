@@ -16,7 +16,7 @@ interface ListActionProps {
 
 const ListAction = ({ item }: ListActionProps) => {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       <div
         role="button"
         className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition opacity-0 group-hover:opacity-100"

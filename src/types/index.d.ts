@@ -13,7 +13,7 @@ export interface IAddFolder {
 export interface IUploadFile {
   file: File;
   userId: string;
-  image: string;
+  url: string;
 }
 
 export interface IGetData {
@@ -26,7 +26,7 @@ export interface IFolderAndFile {
   name: string;
   uid: string;
   timestamp: Timestamp;
-  image: string;
+  url: string;
   type: string;
   size: number;
   isStar: boolean;
