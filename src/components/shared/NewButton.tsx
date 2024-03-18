@@ -12,7 +12,7 @@ const NewButton = () => {
           <span className="text-md">New</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit p-2 dark:bg-[#171717]">
+      <PopoverContent className="w-fit px-0 py-1 dark:bg-[#171717]">
         <PopoverActions />
       </PopoverContent>
     </Popover>

@@ -1,6 +1,6 @@
 "use client";
 
-import useFolder from "@/hooks/useFolder";
+import useName from "@/hooks/useName";
 import { uploadFile } from "@/lib/actions/file";
 import { useUser } from "@clerk/nextjs";
 import { FileUp, Folder, FolderUp } from "lucide-react";
@@ -11,7 +11,7 @@ import { Separator } from "../ui/separator";
 
 const PopoverActions = () => {
   const inputRef = useRef<ElementRef<"input">>(null);
-  const { onOpen } = useFolder();
+  const { onOpen } = useName();
   const { user } = useUser();
   const router = useRouter();
 
@@ -56,7 +56,7 @@ const PopoverActions = () => {
       <div
         className="flex items-center justify-start gap-3 hover:bg-slate-50 dark:hover:bg-[#272727] px-4 py-2"
         role="button"
-        onClick={onOpen}
+        onClick={() => onOpen("name", "null")}
       >
         <Folder className="size-5" />
         <span className="text-md">New Folder</span>

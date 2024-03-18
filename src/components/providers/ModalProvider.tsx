@@ -1,9 +1,9 @@
-import FolderModal from "../modals/FolderModal";
+import NameModal from "../modals/NameModal";
 
 const ModalProvider = () => {
   return (
     <div className="fixed">
-      <FolderModal />
+      <NameModal />
     </div>
   );
 };

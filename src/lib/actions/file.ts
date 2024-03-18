@@ -1,4 +1,4 @@
-import { IUploadFile } from "@/types";
+import { IFolderAndFile, IUploadFile } from "@/types";
 import {
   addDoc,
   collection,
@@ -25,4 +25,10 @@ export const uploadFile = async ({ file, userId, url }: IUploadFile) => {
   const fileUrl = await getDownloadURL(fileRef);
 
   return await updateDoc(doc, { url: fileUrl });
+};
+
+export const getFileDownloadUrl = (item: IFolderAndFile) => {
+  const fileRef = ref(storage, item.url);
+  const downloadUrl = getDownloadURL(fileRef);
+  return downloadUrl;
 };

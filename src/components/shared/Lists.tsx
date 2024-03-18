@@ -21,7 +21,7 @@ const Lists = ({ folders, files }: ListsProps) => {
   const { layout } = useLayout();
 
   return layout === "list" ? (
-    <Table className="mt-6">
+    <Table className="mt-4">
       <TableHeader>
         <TableRow className="text-base">
           <TableHead>Name</TableHead>
@@ -32,21 +32,21 @@ const Lists = ({ folders, files }: ListsProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {[...folders, ...files].map((folder) => (
-          <ListItem key={folder.id} item={folder} />
+        {[...folders, ...files].map((item) => (
+          <ListItem key={item.id} item={item} />
         ))}
       </TableBody>
     </Table>
   ) : (
     <>
-      <div className="text-base opacity-70 mt-6">Suggested</div>
+      <div className="text-base opacity-70 mt-8">Suggested</div>
       <div className="grid grid-cols-4 gap-4 mt-4">
-        {files.map((item) => (
-          <SuggestCard item={item} key={item.id} />
+        {files.map((file) => (
+          <SuggestCard item={file} key={file.id} />
         ))}
       </div>
-      <div className="text-base opacity-70 mt-6">Folders</div>
-      <Table className="mt-6">
+      <div className="text-base opacity-70 mt-8">Folders</div>
+      <Table className="mt-4">
         <TableHeader>
           <TableRow className="text-base">
             <TableHead>Name</TableHead>

@@ -10,7 +10,7 @@ export default async function Home() {
   const files = await getData({ userId: userId!, type: "files" });
 
   return (
-    <div>
+    <div className="px-4">
       <Header label="My Drive" isHome />
       <Lists
         folders={JSON.parse(JSON.stringify(folders))}
