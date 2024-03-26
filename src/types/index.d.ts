@@ -22,6 +22,7 @@ export interface IGetData {
 }
 
 export interface IGetStarredData extends IGetData {}
+export interface IGetRecentData extends IGetData {}
 
 export interface IFolderAndFile {
   id: string;
