@@ -40,7 +40,7 @@ const Lists = ({ folders, files }: ListsProps) => {
   ) : (
     <>
       <div className="text-base opacity-70 mt-8">Suggested</div>
-      <div className="grid grid-cols-4 gap-4 mt-4">
+      <div className="grid grid-cols-4 gap-8 mt-4">
         {files.map((file) => (
           <SuggestCard item={file} key={file.id} />
         ))}
