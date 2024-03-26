@@ -1,5 +1,6 @@
 import {
   IFolderAndFile,
+  IGetArchiveData,
   IGetData,
   IGetRecentData,
   IGetStarredData,
@@ -54,6 +55,21 @@ export const getRecentData = async ({ userId, type }: IGetRecentData) => {
     where("uid", "==", userId),
     where("isArchive", "==", false),
     limit(4)
+  );
+  const querySnapshot = await getDocs(filterQuery);
+
+  querySnapshot.forEach((item) => data.push({ ...item.data(), id: item.id }));
+
+  return data;
+};
+
+export const getArchiveData = async ({ userId, type }: IGetArchiveData) => {
+  let data: any[] = [];
+
+  const filterQuery = query(
+    collection(db, type),
+    where("uid", "==", userId),
+    where("isArchive", "==", true)
   );
   const querySnapshot = await getDocs(filterQuery);
 
