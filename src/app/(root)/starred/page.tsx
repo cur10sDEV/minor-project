@@ -1,21 +1,22 @@
 import Header from "@/components/shared/Header";
 import Lists from "@/components/shared/Lists";
-import { getData } from "@/lib/actions/shared";
+import { getStarredData } from "@/lib/actions/shared";
 import { auth } from "@clerk/nextjs";
 
-export default async function Home() {
+const Starred = async () => {
   const { userId } = auth();
 
-  const folders = await getData({ userId: userId!, type: "folders" });
-  const files = await getData({ userId: userId!, type: "files" });
+  const folders = await getStarredData({ userId: userId!, type: "folders" });
+  const files = await getStarredData({ userId: userId!, type: "files" });
 
   return (
     <div className="px-4">
-      <Header label="My Drive" isHome />
+      <Header label="Starred" isHome />
       <Lists
         folders={JSON.parse(JSON.stringify(folders))}
         files={JSON.parse(JSON.stringify(files))}
       />
     </div>
   );
-}
+};
+export default Starred;

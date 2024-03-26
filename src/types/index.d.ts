@@ -21,6 +21,8 @@ export interface IGetData {
   type: "folders" | "files";
 }
 
+export interface IGetStarredData extends IGetData {}
+
 export interface IFolderAndFile {
   id: string;
   name: string;
