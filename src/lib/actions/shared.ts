@@ -121,7 +121,8 @@ export const deleteItem = async (item: IFolderAndFile) => {
   const type = item.size ? "files" : "folders";
 
   const docRef = doc(db, type, item.id);
-  const objRef = ref(storage, `files/${docRef.id}/image`);
+
+  const objRef = ref(storage, `files/${docRef.id}/file`);
 
   if (type === "files") {
     await deleteObject(objRef);
