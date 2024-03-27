@@ -18,7 +18,7 @@ export const uploadFile = async ({ file, userId, url }: IUploadFile) => {
     isArchive: false,
   });
 
-  const fileRef = ref(storage, `files/${doc.id}/image`);
+  const fileRef = ref(storage, `files/${doc.id}/file`);
 
   await uploadString(fileRef, url, "data_url");
 
