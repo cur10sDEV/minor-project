@@ -11,7 +11,7 @@ const Starred = async () => {
 
   return (
     <div className="px-4">
-      <Header label="Starred" isHome />
+      <Header label="Starred" />
       <Lists
         folders={JSON.parse(JSON.stringify(folders))}
         files={JSON.parse(JSON.stringify(files))}

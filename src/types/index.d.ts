@@ -34,5 +34,5 @@ export interface IFolderAndFile {
   type: string;
   size: number;
   isStar: boolean;
-  archiveTime: Timestamp;
+  archivedTime: Timestamp;
 }

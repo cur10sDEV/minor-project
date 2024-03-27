@@ -11,7 +11,7 @@ const Recent = async () => {
 
   return (
     <div className="px-4">
-      <Header label="Recent" isHome />
+      <Header label="Recent" />
       <Lists
         folders={JSON.parse(JSON.stringify(folders))}
         files={JSON.parse(JSON.stringify(files))}

@@ -1,6 +1,6 @@
 import useName from "@/hooks/useName";
 import { getFileDownloadUrl } from "@/lib/actions/file";
-import { deleteItem, toggleStar } from "@/lib/actions/shared";
+import { archiveItem, toggleStar } from "@/lib/actions/shared";
 import { IFolderAndFile } from "@/types";
 import {
   Download,
@@ -23,11 +23,11 @@ const ListAction = ({ item }: ListActionProps) => {
   const { refresh } = useRouter();
   const { onOpen } = useName();
 
-  const onDelete = (e: any) => {
+  const onArchive = (e: any) => {
     e.stopPropagation();
 
     toast.promise(
-      deleteItem(item).then(() => refresh()),
+      archiveItem(item).then(() => refresh()),
       {
         loading: "Processing",
         success: "Archived!",
@@ -87,7 +87,7 @@ const ListAction = ({ item }: ListActionProps) => {
       <div
         role="button"
         className="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition opacity-0 group-hover:opacity-100"
-        onClick={onDelete}
+        onClick={onArchive}
       >
         <Trash className="size-5 opacity-75 hover:opacity-100" />
       </div>
@@ -145,7 +145,7 @@ const ListAction = ({ item }: ListActionProps) => {
           <div
             className="flex items-center justify-start gap-2 hover:bg-slate-50 dark:hover:bg-[#272727] px-6 py-2"
             role="button"
-            onClick={onDelete}
+            onClick={onArchive}
           >
             <Trash className="size-5" />
             <span className="text-md">Move to trash</span>

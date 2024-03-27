@@ -1,5 +1,5 @@
 import Header from "@/components/shared/Header";
-import Lists from "@/components/shared/Lists";
+import TrashList from "@/components/trash/TrashList";
 import { getArchiveData } from "@/lib/actions/shared";
 import { auth } from "@clerk/nextjs";
 
@@ -11,8 +11,8 @@ const Archive = async () => {
 
   return (
     <div className="px-4">
-      <Header label="Archive" isHome />
-      <Lists
+      <Header label="Trash" />
+      <TrashList
         folders={JSON.parse(JSON.stringify(folders))}
         files={JSON.parse(JSON.stringify(files))}
       />

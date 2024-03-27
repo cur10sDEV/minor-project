@@ -36,7 +36,7 @@ const PopoverActions = () => {
         reader.readAsDataURL(file);
         reader.onload = (e) => {
           image = e.target?.result as string;
-          const res = toast.promise(
+          toast.promise(
             uploadFile({ file, userId: user.id, url: image }).then(() =>
               router.refresh()
             ),

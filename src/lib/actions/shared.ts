@@ -7,6 +7,8 @@ import {
 } from "@/types";
 import {
   collection,
+  deleteDoc,
+  deleteField,
   doc,
   getDocs,
   limit,
@@ -14,7 +16,8 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { deleteObject, ref } from "firebase/storage";
+import { db, storage } from "../firebase";
 
 export const getData = async ({ userId, type }: IGetData) => {
   let data: any[] = [];
@@ -88,7 +91,7 @@ export const toggleStar = (item: IFolderAndFile) => {
   });
 };
 
-export const deleteItem = (item: IFolderAndFile) => {
+export const archiveItem = (item: IFolderAndFile) => {
   const type = item.size ? "files" : "folders";
 
   const ref = doc(db, type, item.id);
@@ -97,6 +100,34 @@ export const deleteItem = (item: IFolderAndFile) => {
     isArchive: true,
     archivedTime: new Date(),
   });
+};
+
+export const restoreItem = (item: IFolderAndFile) => {
+  const type = item.size ? "files" : "folders";
+
+  const ref = doc(db, type, item.id);
+  return setDoc(
+    ref,
+    {
+      ...item,
+      isArchive: false,
+      archivedTime: deleteField(),
+    },
+    { merge: true }
+  );
+};
+
+export const deleteItem = async (item: IFolderAndFile) => {
+  const type = item.size ? "files" : "folders";
+
+  const docRef = doc(db, type, item.id);
+  const objRef = ref(storage, `files/${docRef.id}/image`);
+
+  if (type === "files") {
+    await deleteObject(objRef);
+  }
+
+  return deleteDoc(docRef);
 };
 
 export const renameItem = (item: IFolderAndFile, newName: string) => {
