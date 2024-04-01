@@ -1,5 +1,11 @@
-import { IAddFolder } from "@/types";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { IAddFolder, IGetFolder } from "@/types";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../firebase";
 
 export const addFolder = async ({ folderName, userId }: IAddFolder) => {
@@ -8,9 +14,15 @@ export const addFolder = async ({ folderName, userId }: IAddFolder) => {
     timestamp: serverTimestamp(),
     uid: userId,
     isArchive: false,
+    parent: "root",
   });
 };
 
+export const getFolder = async ({ folderId }: IGetFolder) => {
+  const docRef = doc(db, "folders", folderId);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data();
+};
 // Function to download a folder with its contents in a zip file
 // export const downloadFolder = async (folder: IFolderAndFile): Promise<void> => {
 //   const zip = new JSZip();

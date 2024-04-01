@@ -16,21 +16,27 @@ interface TrashListProps {
 }
 
 const TrashList = ({ folders, files }: TrashListProps) => {
+  let allData: IFolderAndFile[] = [...folders, ...files];
+
   return (
-    <Table className="mt-4">
-      <TableHeader>
-        <TableRow className="text-base">
-          <TableHead>Name</TableHead>
-          <TableHead>Archived Time</TableHead>
-          <TableHead>File Size</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {[...folders, ...files].map((item) => (
-          <TrashItem key={item.id} item={item} />
-        ))}
-      </TableBody>
-    </Table>
+    <>
+      {allData.length > 0 && (
+        <Table className="mt-4">
+          <TableHeader>
+            <TableRow className="text-base">
+              <TableHead>Name</TableHead>
+              <TableHead>Archived Time</TableHead>
+              <TableHead>File Size</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {[...folders, ...files].map((item) => (
+              <TrashItem key={item.id} item={item} />
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </>
   );
 };
 export default TrashList;

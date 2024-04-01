@@ -8,7 +8,14 @@ import {
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { db, storage } from "../firebase";
 
-export const uploadFile = async ({ file, userId, url }: IUploadFile) => {
+export const uploadFile = async ({
+  file,
+  userId,
+  url,
+  folderId,
+}: IUploadFile) => {
+  const folder = folderId ? folderId : "root";
+
   const doc = await addDoc(collection(db, "files"), {
     name: file.name,
     type: file.type,
@@ -16,9 +23,10 @@ export const uploadFile = async ({ file, userId, url }: IUploadFile) => {
     uid: userId,
     timestamp: serverTimestamp(),
     isArchive: false,
+    parent: folder,
   });
 
-  const fileRef = ref(storage, `files/${doc.id}/file`);
+  const fileRef = ref(storage, `files/${folder}/${doc.id}/file`);
 
   await uploadString(fileRef, url, "data_url");
 

@@ -6,6 +6,7 @@ import { useUser } from "@clerk/nextjs";
 import { Avatar } from "@radix-ui/react-avatar";
 import { format } from "date-fns";
 import { File, Folder, Minus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { AvatarImage } from "../ui/avatar";
 import { TableCell, TableRow } from "../ui/table";
 import ListAction from "./ListAction";
@@ -16,10 +17,15 @@ interface ListItemProps {
 
 const ListItem = ({ item }: ListItemProps) => {
   const { user } = useUser();
+  const { push } = useRouter();
+
+  const handleClick = () => {
+    !item.size && push(`/document/${item.id}`);
+  };
 
   return (
     <TableRow className="group cursor-pointer text-lg">
-      <TableCell className="font-medium">
+      <TableCell className="font-medium" onClick={handleClick}>
         <div className="flex items-center gap-2">
           {item.size ? (
             <File className="size-4" />

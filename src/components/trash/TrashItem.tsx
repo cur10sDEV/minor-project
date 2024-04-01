@@ -13,7 +13,6 @@ interface TrashItemProps {
 }
 
 const TrashItem = ({ item }: TrashItemProps) => {
-  console.log();
   const { user } = useUser();
 
   return (
