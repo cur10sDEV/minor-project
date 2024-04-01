@@ -19,13 +19,16 @@ import {
 import { deleteObject, ref } from "firebase/storage";
 import { db, storage } from "../firebase";
 
-export const getData = async ({ userId, type }: IGetData) => {
+export const getData = async ({ userId, type, folderId }: IGetData) => {
   let data: any[] = [];
+
+  const folder = folderId ? folderId : "root";
 
   const filterQuery = query(
     collection(db, type),
     where("uid", "==", userId),
-    where("isArchive", "==", false)
+    where("isArchive", "==", false),
+    where("parent", "==", folder)
   );
   const querySnapshot = await getDocs(filterQuery);
 
@@ -34,14 +37,21 @@ export const getData = async ({ userId, type }: IGetData) => {
   return data;
 };
 
-export const getStarredData = async ({ userId, type }: IGetStarredData) => {
+export const getStarredData = async ({
+  userId,
+  type,
+  folderId,
+}: IGetStarredData) => {
   let data: any[] = [];
+
+  const folder = folderId ? folderId : "root";
 
   const filterQuery = query(
     collection(db, type),
     where("uid", "==", userId),
     where("isArchive", "==", false),
-    where("isStar", "==", true)
+    where("isStar", "==", true),
+    where("parent", "==", folder)
   );
   const querySnapshot = await getDocs(filterQuery);
 
@@ -50,13 +60,20 @@ export const getStarredData = async ({ userId, type }: IGetStarredData) => {
   return data;
 };
 
-export const getRecentData = async ({ userId, type }: IGetRecentData) => {
+export const getRecentData = async ({
+  userId,
+  type,
+  folderId,
+}: IGetRecentData) => {
   let data: any[] = [];
+
+  const folder = folderId ? folderId : "root";
 
   const filterQuery = query(
     collection(db, type),
     where("uid", "==", userId),
     where("isArchive", "==", false),
+    where("parent", "==", folder),
     limit(4)
   );
   const querySnapshot = await getDocs(filterQuery);
@@ -66,8 +83,14 @@ export const getRecentData = async ({ userId, type }: IGetRecentData) => {
   return data;
 };
 
-export const getArchiveData = async ({ userId, type }: IGetArchiveData) => {
+export const getArchiveData = async ({
+  userId,
+  type,
+  folderId,
+}: IGetArchiveData) => {
   let data: any[] = [];
+
+  const folder = folderId ? folderId : "root";
 
   const filterQuery = query(
     collection(db, type),

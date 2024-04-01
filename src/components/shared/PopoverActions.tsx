@@ -4,12 +4,13 @@ import useName from "@/hooks/useName";
 import { uploadFile } from "@/lib/actions/file";
 import { useUser } from "@clerk/nextjs";
 import { FileUp, Folder, FolderUp } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, ElementRef, useRef } from "react";
 import { toast } from "sonner";
 import { Separator } from "../ui/separator";
 
 const PopoverActions = () => {
+  const { id } = useParams();
   const inputRef = useRef<ElementRef<"input">>(null);
   const { onOpen } = useName();
   const { user } = useUser();
@@ -37,9 +38,12 @@ const PopoverActions = () => {
         reader.onload = (e) => {
           image = e.target?.result as string;
           toast.promise(
-            uploadFile({ file, userId: user.id, url: image }).then(() =>
-              router.refresh()
-            ),
+            uploadFile({
+              file,
+              userId: user.id,
+              url: image,
+              folderId: id as string,
+            }).then(() => router.refresh()),
             {
               loading: "Processing",
               success: "File uploaded successfully",
@@ -53,15 +57,19 @@ const PopoverActions = () => {
 
   return (
     <div className="space-y">
-      <div
-        className="flex items-center justify-start gap-3 hover:bg-slate-50 dark:hover:bg-[#272727] px-4 py-2"
-        role="button"
-        onClick={() => onOpen("name", "null")}
-      >
-        <Folder className="size-5" />
-        <span className="text-md">New Folder</span>
-      </div>
-      <Separator />
+      {!id && (
+        <>
+          <div
+            className="flex items-center justify-start gap-3 hover:bg-slate-50 dark:hover:bg-[#272727] px-4 py-2"
+            role="button"
+            onClick={() => onOpen("name", "null")}
+          >
+            <Folder className="size-5" />
+            <span className="text-md">New Folder</span>
+          </div>
+          <Separator />
+        </>
+      )}
       <label>
         <div
           className="flex items-center justify-start gap-3 hover:bg-slate-50 dark:hover:bg-[#272727] px-4 py-2"
