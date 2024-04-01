@@ -20,7 +20,7 @@ export interface IUploadFile {
 export interface IGetData {
   userId: string;
   type: "folders" | "files";
-  folderId: string;
+  folderId?: string;
 }
 
 export interface IGetStarredData extends IGetData {}

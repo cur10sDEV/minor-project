@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import Empty from "./Empty";
 import ListItem from "./ListItem";
 import SuggestCard from "./SuggestCard";
 
@@ -22,6 +23,10 @@ const Lists = ({ folders, files }: ListsProps) => {
 
   let allData: IFolderAndFile[] = [];
   allData = folders ? [...folders, ...files] : [...files];
+
+  if (allData.length === 0) {
+    return <Empty />;
+  }
 
   return layout === "list" ? (
     <Table className="mt-4">
