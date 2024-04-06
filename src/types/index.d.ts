@@ -53,3 +53,7 @@ export interface URLProps {
 export interface IGetFolder {
   folderId: string;
 }
+
+export interface IGetStorageUsage {
+  userId: string;
+}
