@@ -1,4 +1,7 @@
+"use client";
+
 import { sidebarLinks } from "@/constants";
+import usePlan from "@/hooks/usePlan";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
@@ -6,6 +9,8 @@ import NewButton from "./NewButton";
 import SidebarItem from "./SidebarItem";
 
 const Sidebar = () => {
+  const { onOpen } = usePlan();
+
   return (
     <div className="h-[100vh] fixed top-[75px] w-[275px] left-0 z-30 bg-[#f3f3f3] dark:bg-[#1f1f1f]">
       <div className="flex flex-col p-8">
@@ -20,7 +25,11 @@ const Sidebar = () => {
         <div className="flex flex-col space-y-4 mx-4 mt-4">
           <Progress className="h-2" value={30} />
           <span>20 MB of 1.5GB used</span>
-          <Button className="rounded-full text-md py-6" variant="outline">
+          <Button
+            className="rounded-full text-md py-6"
+            variant="outline"
+            onClick={onOpen}
+          >
             Get more storage
           </Button>
         </div>
