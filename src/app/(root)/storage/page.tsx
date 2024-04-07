@@ -13,7 +13,10 @@ const StoragePage = async () => {
   return (
     <>
       <Header label="Storage" />
-      <StorageDetails usedStorage={usedStorage} files={files} />
+      <StorageDetails
+        usedStorage={usedStorage}
+        files={JSON.parse(JSON.stringify(files))}
+      />
     </>
   );
 };

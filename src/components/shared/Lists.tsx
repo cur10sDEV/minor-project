@@ -16,9 +16,10 @@ import SuggestCard from "./SuggestCard";
 interface ListsProps {
   folders?: IFolderAndFile[];
   files: IFolderAndFile[];
+  forcedLayout?: "list" | "grid";
 }
 
-const Lists = ({ folders, files }: ListsProps) => {
+const Lists = ({ folders, files, forcedLayout }: ListsProps) => {
   const { layout } = useLayout();
 
   let allData: IFolderAndFile[] = [];
@@ -28,7 +29,7 @@ const Lists = ({ folders, files }: ListsProps) => {
     return <Empty />;
   }
 
-  return layout === "list" ? (
+  return (forcedLayout && forcedLayout === "list") || layout === "list" ? (
     <Table className="mt-4">
       <TableHeader>
         <TableRow className="text-base">

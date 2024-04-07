@@ -18,7 +18,7 @@ const StorageDetails = async ({ usedStorage, files }: StorageDetailsProps) => {
 
       <Progress value={usedStorage / 15_000_000} />
 
-      {files && <Lists files={JSON.parse(JSON.stringify(files))} />}
+      {files && <Lists files={files} forcedLayout="list" />}
     </div>
   );
 };
