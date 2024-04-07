@@ -74,3 +74,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .center {
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    transform: translate(-60%, -50%);
+  }
+}

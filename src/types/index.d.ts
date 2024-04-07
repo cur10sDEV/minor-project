@@ -20,7 +20,7 @@ export interface IUploadFile {
 export interface IGetData {
   userId: string;
   type: "folders" | "files";
-  folderId: string;
+  folderId?: string;
 }
 
 export interface IGetStarredData extends IGetData {}
@@ -52,4 +52,8 @@ export interface URLProps {
 
 export interface IGetFolder {
   folderId: string;
+}
+
+export interface IGetStorageUsage {
+  userId: string;
 }

@@ -54,14 +54,16 @@ const FolderModal = () => {
       } else if (type === "rename") {
         // renaming a folder/file
         if (item) {
-          toast.promise(
-            renameItem(item, values.name).then(() => router.refresh()),
-            {
-              loading: "Renaming...",
-              success: "Renamed successfull!",
-              error: "Rename failed",
-            }
-          );
+          if (item !== "null") {
+            toast.promise(
+              renameItem(item, values.name).then(() => router.refresh()),
+              {
+                loading: "Renaming...",
+                success: "Renamed successfull!",
+                error: "Rename failed",
+              }
+            );
+          }
         } else {
           toast.error("Unexpected error occurred!");
         }

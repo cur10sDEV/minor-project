@@ -1,6 +1,7 @@
 "use client";
 
 import { IFolderAndFile } from "@/types";
+import Empty from "../shared/Empty";
 import {
   Table,
   TableBody,
@@ -20,7 +21,7 @@ const TrashList = ({ folders, files }: TrashListProps) => {
 
   return (
     <>
-      {allData.length > 0 && (
+      {allData.length > 0 ? (
         <Table className="mt-4">
           <TableHeader>
             <TableRow className="text-base">
@@ -35,6 +36,8 @@ const TrashList = ({ folders, files }: TrashListProps) => {
             ))}
           </TableBody>
         </Table>
+      ) : (
+        <Empty />
       )}
     </>
   );

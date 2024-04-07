@@ -4,6 +4,7 @@ import {
   IGetData,
   IGetRecentData,
   IGetStarredData,
+  IGetStorageUsage,
 } from "@/types";
 import {
   collection,
@@ -163,4 +164,20 @@ export const renameItem = (item: IFolderAndFile, newName: string) => {
     ...item,
     name: newName + ext,
   });
+};
+
+export const getStorageUsage = async ({ userId }: IGetStorageUsage) => {
+  let data: any[] = [];
+
+  const filterQuery = query(
+    collection(db, "files"),
+    where("uid", "==", userId)
+  );
+  const querySnapshot = await getDocs(filterQuery);
+
+  querySnapshot.forEach((item) => data.push({ ...item.data(), id: item.id }));
+
+  const storageUsage = data.reduce((acc, file) => acc + file.size, 0);
+
+  return { storageUsage, data };
 };
