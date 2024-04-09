@@ -4,9 +4,9 @@ import { sidebarLinks } from "@/constants";
 import usePlan from "@/hooks/usePlan";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Progress } from "../ui/progress";
 import NewButton from "./NewButton";
 import SidebarItem from "./SidebarItem";
+import UsageBar from "./UsageBar";
 
 const Sidebar = () => {
   const { onOpen } = usePlan();
@@ -23,8 +23,7 @@ const Sidebar = () => {
           ))}
         </div>
         <div className="flex flex-col space-y-4 mx-4 mt-4">
-          <Progress className="h-2" value={30} />
-          <span>20 MB of 1.5GB used</span>
+          <UsageBar />
           <Button
             className="rounded-full text-md py-6"
             variant="outline"

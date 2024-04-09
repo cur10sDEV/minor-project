@@ -38,21 +38,14 @@ export const getData = async ({ userId, type, folderId }: IGetData) => {
   return data;
 };
 
-export const getStarredData = async ({
-  userId,
-  type,
-  folderId,
-}: IGetStarredData) => {
+export const getStarredData = async ({ userId, type }: IGetStarredData) => {
   let data: any[] = [];
-
-  const folder = folderId ? folderId : "root";
 
   const filterQuery = query(
     collection(db, type),
     where("uid", "==", userId),
     where("isArchive", "==", false),
-    where("isStar", "==", true),
-    where("parent", "==", folder)
+    where("isStar", "==", true)
   );
   const querySnapshot = await getDocs(filterQuery);
 
@@ -61,20 +54,13 @@ export const getStarredData = async ({
   return data;
 };
 
-export const getRecentData = async ({
-  userId,
-  type,
-  folderId,
-}: IGetRecentData) => {
+export const getRecentData = async ({ userId, type }: IGetRecentData) => {
   let data: any[] = [];
-
-  const folder = folderId ? folderId : "root";
 
   const filterQuery = query(
     collection(db, type),
     where("uid", "==", userId),
     where("isArchive", "==", false),
-    where("parent", "==", folder),
     limit(4)
   );
   const querySnapshot = await getDocs(filterQuery);
@@ -84,14 +70,8 @@ export const getRecentData = async ({
   return data;
 };
 
-export const getArchiveData = async ({
-  userId,
-  type,
-  folderId,
-}: IGetArchiveData) => {
+export const getArchiveData = async ({ userId, type }: IGetArchiveData) => {
   let data: any[] = [];
-
-  const folder = folderId ? folderId : "root";
 
   const filterQuery = query(
     collection(db, type),
@@ -146,7 +126,7 @@ export const deleteItem = async (item: IFolderAndFile) => {
 
   const docRef = doc(db, type, item.id);
 
-  const objRef = ref(storage, `files/${docRef.id}/file`);
+  const objRef = ref(storage, `files/${item.parent}/${docRef.id}/file`);
 
   if (type === "files") {
     await deleteObject(objRef);
@@ -179,5 +159,5 @@ export const getStorageUsage = async ({ userId }: IGetStorageUsage) => {
 
   const storageUsage = data.reduce((acc, file) => acc + file.size, 0);
 
-  return { storageUsage, data };
+  return { storageUsage };
 };

@@ -5,6 +5,8 @@ type subscriptionPlan = {
   setSubscription: (subscriptionPlan: "Basic" | "Pro") => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
+  totalStorage: number;
+  setTotalStorage: (totalStorage: number) => void;
 };
 
 export const useSubscription = create<subscriptionPlan>((set) => ({
@@ -12,4 +14,6 @@ export const useSubscription = create<subscriptionPlan>((set) => ({
   setSubscription: (subscription) => set({ subscription }),
   isLoading: true,
   setIsLoading: (isLoading) => set({ isLoading }),
+  totalStorage: 0,
+  setTotalStorage: (totalStorage) => set({ totalStorage }),
 }));

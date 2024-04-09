@@ -43,9 +43,9 @@ const PlanCard = ({ plan }: PlanCardProps) => {
     });
 
     toast.promise(promise, {
-      loading: "Subscribing...",
-      success: "Subscribed!",
-      error: "Error subscribing!",
+      loading: subscription === "Basic" ? "Subscribing..." : "Processing",
+      success: subscription === "Basic" ? "Subscribed!" : "Processed",
+      error: subscription === "Basic" ? "Error Subscribing!" : "Failed",
     });
   };
 

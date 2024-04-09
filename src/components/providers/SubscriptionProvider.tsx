@@ -1,13 +1,14 @@
 "use client";
 
 import { useSubscription } from "@/hooks/useSubscription";
+import { getStorageUsage } from "@/lib/actions/shared";
 import { ChildProps } from "@/types";
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 
 const SubscriptionProvider = ({ children }: ChildProps) => {
   const { user, isLoaded } = useUser();
-  const { setIsLoading, setSubscription } = useSubscription();
+  const { setIsLoading, setSubscription, setTotalStorage } = useSubscription();
 
   useEffect(() => {
     const getData = async () => {
@@ -17,6 +18,13 @@ const SubscriptionProvider = ({ children }: ChildProps) => {
       );
       const data = await res.json();
       setSubscription(data);
+
+      // get storage usage
+      const { storageUsage: usedStorage } = await getStorageUsage({
+        userId: user?.id as string,
+      });
+      setTotalStorage(usedStorage);
+
       setIsLoading(false);
     };
 
