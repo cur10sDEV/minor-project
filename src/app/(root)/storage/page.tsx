@@ -1,22 +1,17 @@
 import Header from "@/components/shared/Header";
 import StorageDetails from "@/components/shared/StorageDetails";
-import { getStorageUsage } from "@/lib/actions/shared";
+import { getData } from "@/lib/actions/shared";
 import { auth } from "@clerk/nextjs";
 
 const StoragePage = async () => {
   const { userId } = auth();
 
-  const { storageUsage: usedStorage, data: files } = await getStorageUsage({
-    userId: userId as string,
-  });
+  const files = await getData({ userId: userId!, type: "files" });
 
   return (
     <>
       <Header label="Storage" />
-      <StorageDetails
-        usedStorage={usedStorage}
-        files={JSON.parse(JSON.stringify(files))}
-      />
+      <StorageDetails files={JSON.parse(JSON.stringify(files))} />
     </>
   );
 };

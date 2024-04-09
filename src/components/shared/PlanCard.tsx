@@ -1,4 +1,9 @@
+"use client";
+
+import { useSubscription } from "@/hooks/useSubscription";
+import { useUser } from "@clerk/nextjs";
 import { Check } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
@@ -16,6 +21,34 @@ interface PlanCardProps {
 
 const PlanCard = ({ plan }: PlanCardProps) => {
   const { name, description, options, price, priceId } = plan;
+
+  const { user } = useUser();
+  const { subscription } = useSubscription();
+
+  const onSubmit = () => {
+    const promise = fetch("/api/subscription", {
+      method: "POST",
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      body: JSON.stringify({
+        email: user?.emailAddresses[0].emailAddress,
+        fullName: user?.fullName,
+        userId: user?.id,
+        priceId,
+      }),
+    }).then(async (res) => {
+      const data = await res.json();
+      window.open(data, "_blank");
+    });
+
+    toast.promise(promise, {
+      loading: subscription === "Basic" ? "Subscribing..." : "Processing",
+      success: subscription === "Basic" ? "Subscribed!" : "Processed",
+      error: subscription === "Basic" ? "Error Subscribing!" : "Failed",
+    });
+  };
+
   return (
     <div className="border rounded-md p-4">
       <h1 className="text-center text-xl">{name}</h1>
@@ -28,7 +61,19 @@ const PlanCard = ({ plan }: PlanCardProps) => {
         <span className="text-gray-500 dark:text-gray-400"> / month</span>
       </div>
       <div className="w-full flex justify-center">
-        <Button className="text-lg p-6">Get Offer</Button>
+        {priceId ? (
+          <Button className="text-lg p-6" onClick={onSubmit}>
+            {subscription === "Basic" ? "Get Offer" : "Manage Subscription"}
+          </Button>
+        ) : (
+          <Button
+            className="text-lg p-6"
+            disabled={subscription !== "Pro"}
+            variant={subscription === "Basic" ? "destructive" : "default"}
+          >
+            {subscription === "Basic" ? "Current Plan" : "Manage Subscription"}
+          </Button>
+        )}
       </div>
       <Separator className="mt-4" />
       <p className="mt-3 opacity-75">This plan includes</p>

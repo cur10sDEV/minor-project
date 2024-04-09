@@ -37,6 +37,7 @@ export interface IFolderAndFile {
   size: number;
   isStar: boolean;
   archivedTime: Timestamp;
+  parent: string;
 }
 
 export interface ParamsProps {

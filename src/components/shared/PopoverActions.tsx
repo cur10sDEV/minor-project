@@ -1,6 +1,7 @@
 "use client";
 
 import useName from "@/hooks/useName";
+import { useSubscription } from "@/hooks/useSubscription";
 import { uploadFile } from "@/lib/actions/file";
 import { useUser } from "@clerk/nextjs";
 import { FileUp, Folder, FolderUp } from "lucide-react";
@@ -15,6 +16,7 @@ const PopoverActions = () => {
   const { onOpen } = useName();
   const { user } = useUser();
   const router = useRouter();
+  const { setTotalStorage, totalStorage } = useSubscription();
 
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!user?.id) {
@@ -43,7 +45,10 @@ const PopoverActions = () => {
               userId: user.id,
               url: image,
               folderId: id as string,
-            }).then(() => router.refresh()),
+            }).then(() => {
+              setTotalStorage(totalStorage + file.size);
+              router.refresh();
+            }),
             {
               loading: "Processing",
               success: "File uploaded successfully",
