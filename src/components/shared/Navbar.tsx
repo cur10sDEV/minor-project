@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs";
-import { HelpCircle, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback } from "../ui/avatar";
@@ -20,18 +20,14 @@ const Navbar = () => {
         </Link>
         <div className="flex items-center space-x-2">
           <ModeToggle />
-          <div
-            className="p-2 hover:bg-secondary rounded-full transition"
-            role="button"
-          >
-            <Settings className="size-6" />
-          </div>
-          <div
-            className="p-2 hover:bg-secondary rounded-full transition"
-            role="button"
-          >
-            <HelpCircle className="size-6" />
-          </div>
+          <Link href={"/settings"}>
+            <div
+              className="p-2 hover:bg-secondary rounded-full transition"
+              role="button"
+            >
+              <Settings className="size-6" />
+            </div>
+          </Link>
           {userId ? (
             <UserBox />
           ) : (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useClerk, useUser } from "@clerk/nextjs";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import {
@@ -26,7 +27,7 @@ const UserBox = () => {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-80"
+        className="w-80 p-2"
         align="start"
         alignOffset={11}
         forceMount
@@ -49,18 +50,28 @@ const UserBox = () => {
           </div>
 
           <DropdownMenuSeparator />
+          <div>
+            <Link href="/settings">
+              <DropdownMenuItem
+                asChild
+                className="w-full cursor-pointer text-muted-foreground"
+              >
+                <div role="button">Account</div>
+              </DropdownMenuItem>
+            </Link>
 
-          <DropdownMenuItem
-            asChild
-            className="w-full cursor-pointer text-muted-foreground"
-          >
-            <div
-              role="button"
-              onClick={() => signOut(() => router.push("/sign-in"))}
+            <DropdownMenuItem
+              asChild
+              className="w-full cursor-pointer text-muted-foreground"
             >
-              Log out
-            </div>
-          </DropdownMenuItem>
+              <div
+                role="button"
+                onClick={() => signOut(() => router.push("/sign-in"))}
+              >
+                Log out
+              </div>
+            </DropdownMenuItem>
+          </div>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>
