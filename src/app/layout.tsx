@@ -1,4 +1,5 @@
 import ModalProvider from "@/components/providers/ModalProvider";
+import SubscriptionProvider from "@/components/providers/SubscriptionProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -38,7 +39,7 @@ export default function RootLayout({
                 classNames: { title: "text-base" },
               }}
             />
-            {children}
+            <SubscriptionProvider>{children}</SubscriptionProvider>
           </ThemeProvider>
         </body>
       </html>

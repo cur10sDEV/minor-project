@@ -37,5 +37,6 @@ const planArray = [
     price: "10",
     options:
       "15 GB of storage, More storage, Share with upto 5 members, More features unlocked",
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_API_ID,
   },
 ];
