@@ -1,12 +1,7 @@
 "use client";
 
 import useLayout from "@/hooks/useLayout";
-import {
-  ChevronDown,
-  Info,
-  LayoutPanelTop,
-  TableProperties,
-} from "lucide-react";
+import { ChevronDown, LayoutPanelTop, TableProperties } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import PopoverActions from "./PopoverActions";
 
@@ -55,13 +50,6 @@ const Header = ({ label, isHome }: HeaderProps) => {
               <LayoutPanelTop className="size-6" />
             </div>
           )}
-
-          <div
-            role="button"
-            className="p-2 hover:bg-secondary rounded-full transition"
-          >
-            <Info className="size-6" />
-          </div>
         </div>
       )}
     </div>

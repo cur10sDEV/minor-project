@@ -28,9 +28,6 @@ const PlanCard = ({ plan }: PlanCardProps) => {
   const onSubmit = () => {
     const promise = fetch("/api/subscription", {
       method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
       body: JSON.stringify({
         email: user?.emailAddresses[0].emailAddress,
         fullName: user?.fullName,
